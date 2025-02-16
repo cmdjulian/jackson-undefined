@@ -13,15 +13,15 @@ public final class JacksonPropertyModule extends SimpleModule {
 
     @Override
     public void setupModule(SetupContext context) {
-        SimpleSerializers serializers = new SimpleSerializers();
+        // deserializer
         SimpleDeserializers deserializers = new SimpleDeserializers();
-
-        serializers.addSerializer(new PropertySerializer());
         deserializers.addDeserializer(Property.class, new PropertyDeserializer());
-
-        context.addSerializers(serializers);
         context.addDeserializers(deserializers);
 
+        // serializer
+        SimpleSerializers serializers = new SimpleSerializers();
+        serializers.addSerializer(new PropertySerializer());
+        context.addSerializers(serializers);
         // Register the BeanSerializerModifier so Jackson will omit absent properties.
         context.addBeanSerializerModifier(new AbsentPropertyBeanSerializerModifier());
     }

@@ -15,8 +15,7 @@ final class AbsentAwarePropertyBeanPropertyWriter extends BeanPropertyWriter {
 
     @Override
     public void serializeAsField(Object bean, JsonGenerator gen, SerializerProvider prov) throws Exception {
-        Object value = delegate.get(bean);
-        if (!(value instanceof Property.Absent<?>)) {
+        if (delegate.get(bean) instanceof Property<?> property && property.isPresent()) {
             delegate.serializeAsField(bean, gen, prov);
         }
     }

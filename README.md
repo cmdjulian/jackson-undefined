@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/cmdjulian/jackson-undefined.svg)](https://jitpack.io/#cmdjulian/jackson-undefined)
+
 # Jackson Undefined Property Module
 
 ![logo](./logo.png)
