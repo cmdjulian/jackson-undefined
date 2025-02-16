@@ -7,26 +7,21 @@ repositories {
 }
 
 dependencies {
+    api(libs.jspecify)
     implementation(libs.bundles.jackson)
 
     testImplementation(libs.assertj)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.jackson.parameter.names)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(8)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
-tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
-}
-
-tasks.withType<JavaCompile> {
-    options.compilerArgs.add("-parameters")
 }

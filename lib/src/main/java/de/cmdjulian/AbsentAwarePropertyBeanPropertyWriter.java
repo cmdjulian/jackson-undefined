@@ -1,10 +1,10 @@
-package org.example;
+package de.cmdjulian;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
 
-public class AbsentAwarePropertyBeanPropertyWriter extends BeanPropertyWriter {
+final class AbsentAwarePropertyBeanPropertyWriter extends BeanPropertyWriter {
 
     private final BeanPropertyWriter delegate;
 
@@ -16,13 +16,8 @@ public class AbsentAwarePropertyBeanPropertyWriter extends BeanPropertyWriter {
     @Override
     public void serializeAsField(Object bean, JsonGenerator gen, SerializerProvider prov) throws Exception {
         Object value = delegate.get(bean);
-        if (value instanceof Property) {
-            Property<?> property = (Property<?>) value;
-            // If the property is absent, skip writing the field.
-            if (property.isAbsent()) {
-                return;
-            }
+        if (!(value instanceof Property.Absent<?>)) {
+            delegate.serializeAsField(bean, gen, prov);
         }
-        delegate.serializeAsField(bean, gen, prov);
     }
 }

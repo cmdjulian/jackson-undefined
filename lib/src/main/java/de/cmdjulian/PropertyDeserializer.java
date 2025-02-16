@@ -1,4 +1,4 @@
-package org.example;
+package de.cmdjulian;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -6,35 +6,37 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import com.fasterxml.jackson.databind.util.AccessPattern;
+import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
 
-public final class PropertyDeserializer<T> extends JsonDeserializer<Property<T>> implements ContextualDeserializer {
+@SuppressWarnings("rawtypes")
+final class PropertyDeserializer extends JsonDeserializer<Property> implements ContextualDeserializer {
 
-    private Class<T> cls;
+    @Nullable
+    private Class<?> cls;
 
     @Override
-    @SuppressWarnings("unchecked")
-    public JsonDeserializer<Property<T>> createContextual(DeserializationContext ctxt, BeanProperty property) {
-        cls = (Class<T>) ctxt.getContextualType().getBindings().getBoundType(0).getRawClass();
+    public JsonDeserializer<Property> createContextual(DeserializationContext ctxt, BeanProperty property) {
+        cls = ctxt.getContextualType().getBindings().getBoundType(0).getRawClass();
         return this;
     }
 
     @Override
-    public Property<T> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+    public Property deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         if (cls == null) throw new IllegalStateException("Deserializer not initialized");
-        T value = p.getCodec().readValue(p, cls);
-        return Property.of(value);
+        Object value = p.getCodec().readValue(p, cls);
+        return new Property.Value<>(value);
     }
 
     @Override
     public Object getAbsentValue(DeserializationContext ctxt) {
-        return Property.absent();
+        return new Property.Absent<>();
     }
 
     @Override
-    public Property<T> getNullValue(DeserializationContext ctxt) {
-        return Property.nullValue();
+    public Property getNullValue(DeserializationContext ctxt) {
+        return new Property.Null<>();
     }
 
     @Override
@@ -45,7 +47,7 @@ public final class PropertyDeserializer<T> extends JsonDeserializer<Property<T>>
 
     @Override
     public Object getEmptyValue(DeserializationContext ctxt) {
-        return Property.nullValue();
+        return new Property.Null<>();
     }
 
     @Override
