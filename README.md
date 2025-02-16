@@ -1,5 +1,7 @@
 # Jackson Undefined Property Module
 
+![logo](./logo.png)
+
 ## Overview
 
 **Jackson Undefined Property Module** is a Java and Kotlin extension for the Jackson serialization framework that
@@ -279,36 +281,36 @@ public class UserProfile {
 
 ```java
 void main() throws JsonProcessingException {
-  ObjectMapper mapper = new ObjectMapper();
-  mapper.findAndRegisterModules();
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.findAndRegisterModules();
 
-  String jsonPayload = """
-          {
-            "username": "jdoe",
-            "email": null,
-            "age": 25,
-            "address": {
-              "street": "123 Main St",
-              "city": null
-            }
-          }""";
+    String jsonPayload = """
+            {
+              "username": "jdoe",
+              "email": null,
+              "age": 25,
+              "address": {
+                "street": "123 Main St",
+                "city": null
+              }
+            }""";
 
-  var userProfile = mapper.readValue(jsonPayload, UserProfile.class);
+    var userProfile = mapper.readValue(jsonPayload, UserProfile.class);
 
-  // Accessing values
-  System.out.println("Username: " + userProfile.username.value()); // Output: jdoe
-  System.out.println("Email: " + (userProfile.email.asOptional().orElse("fallback"))); // Output: fallback
-  System.out.println("Age: " + userProfile.age.value()); // Output: 25
-  System.out.println("Street: " + userProfile.address.map(UserProfile.Address::street).value()); // Output: 123 Main St
-  userProfile.address.visit(address ->
-      address.city.visit(city -> 
-          System.out.println("City: " + city)) // Output: City: null
-  );
-  switch (userProfile.address.fold(UserProfile.Address::zip)) {
-    case Property.Value<String>(var value) -> System.out.println("Zip: " + value);
-    case Property.Absent<?> _ -> System.out.println("Zip: absent");
-    case Property.Null<?> _ -> System.out.println("Zip: null");
-  } // Output: Zip: absent
+    // Accessing values
+    System.out.println("Username: " + userProfile.username.value()); // Output: jdoe
+    System.out.println("Email: " + (userProfile.email.asOptional().orElse("fallback"))); // Output: fallback
+    System.out.println("Age: " + userProfile.age.value()); // Output: 25
+    System.out.println("Street: " + userProfile.address.map(UserProfile.Address::street).value()); // Output: 123 Main St
+    userProfile.address.visit(address ->
+            address.city.visit(city ->
+                    System.out.println("City: " + city)) // Output: City: null
+    );
+    switch (userProfile.address.fold(UserProfile.Address::zip)) {
+        case Property.Value<String>(var value) -> System.out.println("Zip: " + value);
+        case Property.Absent<?> _ -> System.out.println("Zip: absent");
+        case Property.Null<?> _ -> System.out.println("Zip: null");
+    } // Output: Zip: absent
 }
 ```
 
