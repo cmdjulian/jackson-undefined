@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = "jackson-undefined"
-include("lib")
+include("undefined")
