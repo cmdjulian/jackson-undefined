@@ -1,10 +1,6 @@
 plugins {
+    id("undefined.library-conventions")
     alias(libs.plugins.kotlin)
-    `maven-publish`
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -12,15 +8,6 @@ dependencies {
 
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.jackson.parameter.names)
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-kotlin {
-    jvmToolchain(17)
-}
-
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
 }
 
 tasks.register<Jar>("sourcesJar") {
@@ -29,22 +16,11 @@ tasks.register<Jar>("sourcesJar") {
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/cmdjulian/jackson-undefined")
-            credentials {
-                username = project.findProperty("gpr.user") as? String? ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") as? String? ?: System.getenv("TOKEN")
-            }
-        }
-    }
-
     publications {
         create<MavenPublication>("jackson-undefined-kt") {
             groupId = "de.cmdjulian"
-            artifactId = "jackson-undefined"
-            version = "1.0.0"
+            artifactId = "jackson-undefined-kotlin"
+            version = project.version.toString()
 
             from(components["java"])
             artifact(tasks["sourcesJar"])
