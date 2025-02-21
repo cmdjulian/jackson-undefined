@@ -1,5 +1,5 @@
 plugins {
-    id("undefined.library-conventions")
+    id("common.library-conventions")
 }
 
 dependencies {
