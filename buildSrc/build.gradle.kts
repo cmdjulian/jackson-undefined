@@ -7,5 +7,5 @@ repositories {
 }
 
 dependencies {
-    implementation("com.widen.versioning:com.widen.versioning.gradle.plugin:0.4.1")
+    implementation("com.javiersc.semver:com.javiersc.semver.gradle.plugin:0.8.0")
 }

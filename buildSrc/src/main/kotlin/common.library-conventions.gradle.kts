@@ -1,7 +1,7 @@
 plugins {
     `java-library`
     `maven-publish`
-    id("com.widen.versioning")
+    id("com.javiersc.semver")
 }
 
 repositories {
@@ -31,7 +31,7 @@ publishing {
     }
 }
 
-versioning {
+semver {
     tagPrefix = "v"
 }
 
