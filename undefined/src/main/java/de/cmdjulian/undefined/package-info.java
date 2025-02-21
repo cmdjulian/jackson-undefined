@@ -1,4 +1,4 @@
 @NullMarked
-package de.cmdjulian;
+package de.cmdjulian.undefined;
 
 import org.jspecify.annotations.NullMarked;

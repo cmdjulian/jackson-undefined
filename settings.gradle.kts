@@ -4,3 +4,4 @@ plugins {
 
 rootProject.name = "jackson-undefined"
 include("undefined")
+include("undefined-kotlin")

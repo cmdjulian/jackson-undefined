@@ -1,4 +1,4 @@
-package de.cmdjulian;
+package de.cmdjulian.undefined;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;

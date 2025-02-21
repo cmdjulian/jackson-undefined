@@ -1,4 +1,4 @@
-package de.cmdjulian;
+package de.cmdjulian.undefined;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;

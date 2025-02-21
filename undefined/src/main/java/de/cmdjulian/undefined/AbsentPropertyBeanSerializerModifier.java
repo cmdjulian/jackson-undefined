@@ -1,4 +1,4 @@
-package de.cmdjulian;
+package de.cmdjulian.undefined;
 
 import com.fasterxml.jackson.databind.BeanDescription;
 import com.fasterxml.jackson.databind.SerializationConfig;

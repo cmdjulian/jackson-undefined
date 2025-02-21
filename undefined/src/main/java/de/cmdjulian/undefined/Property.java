@@ -1,4 +1,4 @@
-package de.cmdjulian;
+package de.cmdjulian.undefined;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
