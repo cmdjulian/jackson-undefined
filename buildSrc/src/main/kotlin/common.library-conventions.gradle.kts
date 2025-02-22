@@ -46,7 +46,7 @@ publishing {
     publications {
         create<MavenPublication>(project.name) {
             groupId = "de.cmdjulian"
-            artifactId = project.name
+            artifactId = "jackson-${project.name}"
             version = project.version.toString()
 
             from(components["java"])
@@ -54,7 +54,7 @@ publishing {
 
             pom {
                 packaging = "jar"
-                name = project.name
+                name = "jackson-${project.name}"
                 description = "undefined wrapper for Jackson"
                 url = "https://github.com/cmdjulian/jackson-undefined"
                 scm {
