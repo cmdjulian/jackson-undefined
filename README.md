@@ -42,7 +42,6 @@ Jackson’s ability to:
   <summary>Maven</summary>
 
 ```xml
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
@@ -56,8 +55,8 @@ Jackson’s ability to:
     <dependencies>
         <dependency>
             <groupId>com.github.cmdjulian</groupId>
-            <artifactId>mopy</artifactId>
-            <version>Tag</version>
+            <artifactId>jackson-undefined</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>
@@ -84,7 +83,8 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("com.github.cmdjulian:jackson-undefined:1.0.0")
+    // use kotlin module
+    implementation("com.github.cmdjulian:jackson-undefined-kotlin:1.0.0")
 }
 ```
 
@@ -109,7 +109,7 @@ dependencyResolutionManagement {
 
 ```groovy
 dependencies {
-    implementation 'com.github.cmdjulian:mopy:1.0.0'
+    implementation 'com.github.cmdjulian:jackson-undefined:1.0.0'
 }
 ```
 
@@ -162,6 +162,27 @@ when (property) {
     is Property.Absent<*> -> println("Property is absent")
     is Property.Null<*> -> println("Property is explicitly null")
     is Property.Value<String> -> println("Property has value: ${property.value}")
+}
+```
+
+### Using Kotlin Extensions
+
+The Kotlin module provides additional extension functions to make working with `Property<T>` more idiomatic in Kotlin.
+
+```kotlin
+val property: Property<String> = Property.Value("Hello, World!")
+
+// Using the invoke operator
+property { value ->
+    println("Property value: $value")
+}
+
+// Using the value property
+println("Property value: ${property.value}")
+
+// Using the invoke operator with receiver
+property { ->
+    println("Property value: $this")
 }
 ```
 
