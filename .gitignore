@@ -30,3 +30,4 @@ replay_pid*
 build
 /.vscode/
 !/gradle/wrapper/gradle-wrapper.jar
+/.kotlin/sessions/kotlin-compiler-15419864651640550208.salive

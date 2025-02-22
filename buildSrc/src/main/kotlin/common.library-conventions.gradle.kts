@@ -4,6 +4,15 @@ plugins {
     id("com.javiersc.semver")
 }
 
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+}
+
+tasks.register<Jar>("sourcesJar") {
+    archiveClassifier = "sources"
+    from(sourceSets.main.get().allSource)
+}
+
 repositories {
     mavenCentral()
 }
@@ -18,6 +27,10 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
+semver {
+    tagPrefix = "v"
+}
+
 publishing {
     repositories {
         maven {
@@ -29,12 +42,34 @@ publishing {
             }
         }
     }
-}
 
-semver {
-    tagPrefix = "v"
-}
+    publications {
+        create<MavenPublication>(project.name) {
+            groupId = "de.cmdjulian"
+            artifactId = project.name
+            version = project.version.toString()
 
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
+            from(components["java"])
+            artifact(tasks["sourcesJar"])
+
+            pom {
+                packaging = "jar"
+                name = project.name
+                description = "undefined wrapper for Jackson"
+                url = "https://github.com/cmdjulian/jackson-undefined"
+                scm {
+                    url = "https://github.com/cmdjulian/jackson-undefined"
+                }
+                issueManagement {
+                    url = "https://github.com/cmdjulian/jackson-undefined/issues"
+                }
+                developers {
+                    developer {
+                        id = "cmdjulian"
+                        name = "Julian Goede"
+                    }
+                }
+            }
+        }
+    }
 }
